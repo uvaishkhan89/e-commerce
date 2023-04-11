@@ -17,6 +17,8 @@ export class AuthController {
             name: user.name,
             email: user.email
         };
-        return {token: this.jwtService.sign(payload)};
+        return {token: this.jwtService.sign(payload),
+            payload
+        };
     }
 }

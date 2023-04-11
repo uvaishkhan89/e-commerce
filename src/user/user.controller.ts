@@ -2,18 +2,20 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards, 
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {
   }
 
-  @Post('/signUp')
+  @Post('/signup')
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.add(createUserDto);
   }
 
   @Get()
+  //@UseGuards(JwtAuthGuard)
   findAll() {
     return this.userService.findAll();
   }
