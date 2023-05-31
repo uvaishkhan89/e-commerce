@@ -14,8 +14,13 @@ export class ProductService {
     return this.productRepository.save(createProductDto);
   }
 
-  findAll() {
-    return this.productRepository.find();
+  async findAll(query) {
+    const {page, limit} = query;
+    const [users, total] = await this.productRepository.findAndCount({
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+    return [users, total];
   }
 
   async findOne(id: number) {

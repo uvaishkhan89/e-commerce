@@ -2,8 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { PaginationQueryDto } from 'src/utils/dtos/pagination-query.dto';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 @Controller('product')
+@ApiTags('Product')
+@ApiSecurity('JWT-auth')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
@@ -12,9 +16,9 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
-  @Get()
-  findAll() {
-    return this.productService.findAll();
+  @Post()
+  findAll(@Body() query: PaginationQueryDto) {
+    return this.productService.findAll(query);
   }
 
   @Get(':id')

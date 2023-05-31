@@ -18,8 +18,8 @@ export class Product {
     @Column()
     company: string;
 
-    @Column()
-    userId: string;
+    // @Column()
+    // userId: string;
 
     // @ManyToOne(() => User, (user) => user.products)
     // user: User

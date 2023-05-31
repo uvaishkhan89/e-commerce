@@ -1,23 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
+import { Column } from "typeorm";
 
-export class CreateProductDto {
+export class ResetPasswordDto {
     @IsString()
     @ApiProperty()
-    name: string;
-
-    @IsString()
-    @ApiProperty()
-    price: string
+    email: string;
 
     @IsString()
     @ApiProperty()
-    category: string;
+    token: string;
 
     @IsString()
     @ApiProperty()
-    company: string;
-
-    // @IsString()
-    // userId: string;
+    password: string;
 }

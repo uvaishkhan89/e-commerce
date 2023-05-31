@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards, Inject, forwardRef } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards, Inject, forwardRef, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
+import { UpdatePasswordUserDto } from './dto/update-password.dto';
+import { PaginationQueryDto } from 'src/utils/dtos/pagination-query.dto';
+import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 
 @Controller('user')
+@ApiTags('User')
+@ApiSecurity('JWT-auth')
 export class UserController {
   constructor(private readonly userService: UserService) {
   }
@@ -16,8 +20,8 @@ export class UserController {
 
   @Get()
   //@UseGuards(JwtAuthGuard)
-  findAll() {
-    return this.userService.findAll();
+  async findAll(@Query() query: PaginationQueryDto) {
+    return this.userService.findAll(query);
   }
 
   @Get(':id')
@@ -33,6 +37,11 @@ export class UserController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
+  }
+
+  @Post('/changepassword/:id')
+  changePassword(@Param('id') id: string, @Body() updatePasswordUserDto: UpdatePasswordUserDto){
+    return this.userService.changePassword(id, updatePasswordUserDto)
   }
 
 }
