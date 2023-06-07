@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
+import { User } from './user/entities/user.entity';
+import { Product } from './product/entities/product.entity';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { ProductModule } from './product/product.module';
         synchronize: configService.get<boolean>('DB_SYNC'),
         //entities: ['dist/**/*.entity.{ts,js}'],
         autoLoadEntities: true,
+        //entities:[User,Product],// when ever its run on server. so it is mandatory
         logging: true
       }),
       inject: [ConfigService]
